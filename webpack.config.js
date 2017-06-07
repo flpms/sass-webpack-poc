@@ -6,7 +6,7 @@ const HtmlWebpackIncludeAssetsPlugin = require('html-webpack-include-assets-plug
 
 const extractCSS = new ExtractTextPlugin('./dist/css/[name].css');
 
-module.exports = {
+const devConfig = {
 	entry: ['./app/index.js', './app/index.scss'],
     output: {
         path: path.resolve(__dirname, "dist"),
@@ -44,3 +44,21 @@ module.exports = {
 		new HtmlWebpackIncludeAssetsPlugin({ assets: [], append: true })
     ],
 };
+
+const testConfig = {
+	entry: ['./app/index.js', './app/index.scss'],
+    output: {
+        path: path.resolve(__dirname, 'test'),
+        filename: "bundle.js",
+        publicPath: "/assets/"
+    },
+};
+
+if (process.env.NODE_ENV === 'dev') {
+
+	module.exports = devConfig;
+}
+
+if (process.env.NODE_ENV === 'test') {
+	module.exports = testConfig;
+}
